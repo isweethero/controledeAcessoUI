@@ -1,0 +1,6 @@
+sudo apt-get install libzbar0
+pip install pyzbar
+pip install pyqt5
+pip install opencv-python
+pip install qimage2ndarray
+pip install imutils
