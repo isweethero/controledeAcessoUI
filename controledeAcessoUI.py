@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtCore import QTimer
 import cv2
 import qimage2ndarray #SOLUTION FOR MEMORY LEAK
@@ -19,7 +20,9 @@ from imutils.video import VideoStream
 
 class Ui_MainWindow(object):
     def __init__(self):
-      #  self.video_size = QSize(320, 240)
+        cadastrodb = mysql.connector.connect(host="192.168.1.145",user="test",passwd="cerejinha123",database="cadastro")		# accesando o banco de dados
+        mycursor = cadastrodb.cursor()
+        #self.video_size = QSize(320, 240)
         self.setup_camera()
         
     def setupUi(self, MainWindow):
@@ -101,6 +104,18 @@ class Ui_MainWindow(object):
         self.timer.timeout.connect(self.display_video_stream)
         self.timer.start(30)
 
+    def mensagebox(self):
+        msgBox = QMessageBox()
+        msgBox.setIcon(QMessageBox.Information)
+        msgBox.setText("Message box pop up window")
+        msgBox.setWindowTitle("QMessageBox Example")
+        msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+        #msgBox.buttonClicked.connect(msgButtonClick)
+        returnValue = msgBox.exec()
+
+        if returnValue == QMessageBox.Ok:
+            print('OK clicked')
+
     def display_video_stream(self):
         """Read frame from camera and repaint QLabel widget.
         """
@@ -113,20 +128,36 @@ class Ui_MainWindow(object):
         barcodes = pyzbar.decode(frame)
         for barcode in barcodes:			# loop nos códigos reconhecidos
             (x, y, w, h) = barcode.rect										# pegando as bordas do qr 
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)	# e desenhando em volta 
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 4)	# e desenhando em volta 
 		
             barcodeData = barcode.data.decode("utf-8")	# o que foi lido é em bytes, transformando em texto
-            barcodeType = barcode.type					# tipo do código reconhecido
 
-            text = "{} ({})".format(barcodeData, barcodeType)	# transformando em uma string para ser mostrado
+            #text = "{}".format(barcodeData)	# transformando em uma string para ser mostrado
 
             #print(barcodeData) # esse é o que tem no qrcode
 
-            cv2.putText(frame, text, (x, y - 10),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)		# desenhando o código e o tipo dele na imagem 
-            image = qimage2ndarray.array2qimage(frame)  #SOLUTION FOR MEMORY LEAK
-            
+            #cv2.putText(frame, text, (x, y - 10),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)		# desenhando o código e o tipo dele na imagem 
+
+            image = qimage2ndarray.array2qimage(frame)  #SOLUTION FOR MEMORY LEAK  
             self.stream.setPixmap(QtGui.QPixmap(image))
-        
+
+            separar=barcodeData.split("\r\n")																# separando os dados lidos, é separado no \r\n de cada. exemplo TESTE3\r\n1\r\n1 ficará TESTE3,1,1 ---  rg=9 números ra=13 números
+            print("Separando "+str(separar))
+
+            try:
+                nome=separar[0]
+                rg=str(separar[1])																			# rg
+                ra=str(separar[2])																			# ra
+                comando="select nome from pessoas where rg=md5('{}') and ra=md5('{}')".format(rg,ra)		# e prepará o envio da pergunta 'o rg e o ra estão no banco de dados?' e retorna o nome da pessoa ----- talvez vulnerável a sql injection
+
+                mycursor.execute(comando)																	# executa a ação 
+                
+                myresult = mycursor.fetchall()		    													# terminado a execução do comando é necessário isso -- https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursor-fetchall.html
+
+            except:
+                print("formato invalido")
+                self.mensagebox()
+                
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
