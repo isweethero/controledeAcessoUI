@@ -107,14 +107,14 @@ class Ui_MainWindow(object):
     def mensagebox(self):
         msgBox = QMessageBox()
         msgBox.setIcon(QMessageBox.Information)
-        msgBox.setText("Message box pop up window")
-        msgBox.setWindowTitle("QMessageBox Example")
-        msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+        msgBox.setText("Formato inválido!")
+        msgBox.setWindowTitle("Inválido!")
+        msgBox.setStandardButtons(QMessageBox.Ok)
         #msgBox.buttonClicked.connect(msgButtonClick)
         returnValue = msgBox.exec()
 
         if returnValue == QMessageBox.Ok:
-            print('OK clicked')
+            print("ok clicado")
 
     def display_video_stream(self):
         """Read frame from camera and repaint QLabel widget.
@@ -148,11 +148,21 @@ class Ui_MainWindow(object):
                 nome=separar[0]
                 rg=str(separar[1])																			# rg
                 ra=str(separar[2])																			# ra
+                print("rg="+str(rg))
                 comando="select nome from pessoas where rg=md5('{}') and ra=md5('{}')".format(rg,ra)		# e prepará o envio da pergunta 'o rg e o ra estão no banco de dados?' e retorna o nome da pessoa ----- talvez vulnerável a sql injection
 
                 mycursor.execute(comando)																	# executa a ação 
                 
                 myresult = mycursor.fetchall()		    													# terminado a execução do comando é necessário isso -- https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursor-fetchall.html
+
+                print(myresult)
+
+                if str(myresult) == "[]":
+                    print("nao cadastrado, tentando cadastrar")
+
+                else:
+                    print("usuario cadastrado")
+                    print("Bem Vindo {}".format(str(myresult).replace("[('","").replace("',)]","")))												# mostra no terminal a mensagem "Bem Vindo" + o nome do usuário formatado corretamente
 
             except:
                 print("formato invalido")
