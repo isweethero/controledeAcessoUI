@@ -126,8 +126,6 @@ class Ui_MainWindow(object):
             image = qimage2ndarray.array2qimage(frame)  #SOLUTION FOR MEMORY LEAK
             
             self.stream.setPixmap(QtGui.QPixmap(image))
-            
-            print(self.separar(barcodeData))
         
 if __name__ == "__main__":
     import sys
