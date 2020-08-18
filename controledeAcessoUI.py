@@ -128,14 +128,6 @@ class Ui_MainWindow(object):
             self.stream.setPixmap(QtGui.QPixmap(image))
             
             print(self.separar(barcodeData))
-            
-    def separar(self,dados):
-        separar=dados.split("\r\n")
-        nome=separar[0]																			# pegar o nome da separação e também
-        rg=str(separar[1])																			# rg
-        ra=str(separar[2])
-        return nome,rg,ra
-
         
 if __name__ == "__main__":
     import sys
