@@ -91,9 +91,7 @@ class Ui_MainWindow(object):
         self.label_labmaker.setText(_translate("MainWindow", "Laboratório Maker"))
         self.aguardando.setText(_translate("MainWindow", "Aguardando código QR"))
 
-    def setup_camera(self):
-        """Initialize camera.
-        """
+    def setup_camera(self): #Initialize camera.        
         self.capture=VideoStream(src=0).start()
         #self.capture.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, self.video_size.width())
         #self.capture.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, self.video_size.height())
@@ -110,35 +108,26 @@ class Ui_MainWindow(object):
         msgBox.setStandardButtons(QMessageBox.Ok)
         #msgBox.buttonClicked.connect(msgButtonClick)
         returnValue = msgBox.exec()
-
         if returnValue == QMessageBox.Ok:
             print("ok clicado")
 
     def principal(self):
-        """Read frame from camera and repaint QLabel widget.
-        """
-        frame = self.capture.read()
+        frame = self.capture.read()     #Read frame from camera and repaint QLabel widget.
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         #frame = cv2.flip(frame, 1)
         image = qimage2ndarray.array2qimage(frame)  #SOLUTION FOR MEMORY LEAK
         self.stream.setPixmap(QtGui.QPixmap(image))
-        
         barcodes = pyzbar.decode(frame)
+        
         for barcode in barcodes:			# loop nos códigos reconhecidos
             (x, y, w, h) = barcode.rect										# pegando as bordas do qr 
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 4)	# e desenhando em volta 
-		
             barcodeData = barcode.data.decode("utf-8")	# o que foi lido é em bytes, transformando em texto
-
             #text = "{}".format(barcodeData)	# transformando em uma string para ser mostrado
-
             #print(barcodeData) # esse é o que tem no qrcode
-
             #cv2.putText(frame, text, (x, y - 10),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)		# desenhando o código e o tipo dele na imagem 
-
             image = qimage2ndarray.array2qimage(frame)  #SOLUTION FOR MEMORY LEAK  
             self.stream.setPixmap(QtGui.QPixmap(image))
-
             separar=barcodeData.split("\r\n")																# separando os dados lidos, é separado no \r\n de cada. exemplo TESTE3\r\n1\r\n1 ficará TESTE3,1,1 ---  rg=9 números ra=13 números
             print("Separando "+str(separar))
 
@@ -148,16 +137,12 @@ class Ui_MainWindow(object):
                 ra=str(separar[2])																			# ra
                 print("rg="+str(rg))
                 comando="select nome from pessoas where rg=md5('{}') and ra=md5('{}')".format(rg,ra)		# e prepará o envio da pergunta 'o rg e o ra estão no banco de dados?' e retorna o nome da pessoa ----- talvez vulnerável a sql injection
-
                 mycursor.execute(comando)																	# executa a ação 
-                    
                 myresult = mycursor.fetchall()		    													# terminado a execução do comando é necessário isso -- https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursor-fetchall.html
-
                 print(myresult)
 
                 if str(myresult) == "[]":
                     print("nao cadastrado, tentando cadastrar")
-
                 else:
                     print("usuario cadastrado")
                     print("Bem Vindo {}".format(str(myresult).replace("[('","").replace("',)]","")))												# mostra no terminal a mensagem "Bem Vindo" + o nome do usuário formatado corretamente
