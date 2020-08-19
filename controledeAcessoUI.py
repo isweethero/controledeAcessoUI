@@ -22,7 +22,10 @@ class Ui_MainWindow(object):
     def __init__(self):
         #self.video_size = QSize(320, 240)
         self.setup_camera()
-        
+
+    def cadastroUI(self,CadastroWindow):
+        pass
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setWindowModality(QtCore.Qt.NonModal)
@@ -35,7 +38,7 @@ class Ui_MainWindow(object):
         MainWindow.setSizePolicy(sizePolicy)
         MainWindow.setMinimumSize(QtCore.QSize(1024, 600))
         MainWindow.setMaximumSize(QtCore.QSize(1024, 600))
-        MainWindow.setWindowTitle("")
+        MainWindow.setWindowTitle("LabMaker")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("ico.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -100,16 +103,38 @@ class Ui_MainWindow(object):
         self.timer.timeout.connect(self.principal)
         self.timer.start(30)
 
-    def mensagebox(self):
+    def mensagebox(self,op):
         msgBox = QMessageBox()
         msgBox.setIcon(QMessageBox.Information)
-        msgBox.setText("Formato inválido!")
-        msgBox.setWindowTitle("Inválido!")
-        msgBox.setStandardButtons(QMessageBox.Ok)
-        #msgBox.buttonClicked.connect(msgButtonClick)
-        returnValue = msgBox.exec()
-        if returnValue == QMessageBox.Ok:
-            print("ok clicado")
+        if op=="invalido":
+            msgBox.setText("Formato inválido!")
+            msgBox.setWindowTitle("Inválido!")
+            msgBox.setStandardButtons(QMessageBox.Ok)
+            #msgBox.buttonClicked.connect(msgButtonClick)
+            returnValue = msgBox.exec()
+            if returnValue == QMessageBox.Ok:
+                print("ok")
+
+        if op=="cadastro":
+            msgBox.setText("Usuário não encontrado, deseja iniciar cadastramento?")
+            msgBox.setWindowTitle("Cadastro")
+            msgBox.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+            returnValue = msgBox.exec()
+            if returnValue == QMessageBox.Yes:
+                print("quer cadastrar")
+                cadastroUI()
+
+            if returnValue == QMessageBox.No:
+                print("não quer cadastrar")
+                pass
+
+        if op=="bem-vindo":
+            msgBox.setText("Bem-Vindo {}".format(str(self.myresult).replace("[('","").replace("',)]","")))
+            msgBox.setWindowTitle("Bem-Vindo")
+            msgBox.setStandardButtons(QMessageBox.Ok)
+            returnValue = msgBox.exec()
+            if returnValue == QMessageBox.Ok:
+                print("ok")
 
     def principal(self):
         frame = self.capture.read()     #Read frame from camera and repaint QLabel widget.
@@ -138,18 +163,23 @@ class Ui_MainWindow(object):
                 print("rg="+str(rg))
                 comando="select nome from pessoas where rg=md5('{}') and ra=md5('{}')".format(rg,ra)		# e prepará o envio da pergunta 'o rg e o ra estão no banco de dados?' e retorna o nome da pessoa ----- talvez vulnerável a sql injection
                 mycursor.execute(comando)																	# executa a ação 
-                myresult = mycursor.fetchall()		    													# terminado a execução do comando é necessário isso -- https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursor-fetchall.html
-                print(myresult)
+                self.myresult = mycursor.fetchall()		    													# terminado a execução do comando é necessário isso -- https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursor-fetchall.html
 
-                if str(myresult) == "[]":
+                if str(self.myresult) == "[]":
                     print("nao cadastrado, tentando cadastrar")
+                    self.mensagebox("cadastro")
+
                 else:
                     print("usuario cadastrado")
-                    print("Bem Vindo {}".format(str(myresult).replace("[('","").replace("',)]","")))												# mostra no terminal a mensagem "Bem Vindo" + o nome do usuário formatado corretamente
-
+                    print("Bem Vindo {}".format(str(self.myresult).replace("[('","").replace("',)]","")))												# mostra no terminal a mensagem "Bem Vindo" + o nome do usuário formatado corretamente
+                    guardando="insert into controle (ra,datas) values ('{}',current_timestamp())".format(ra)				# guadando a quem entrou na sala no banco de dados
+                    mycursor.execute(guardando)																				# executando a ação
+                    cadastrodb.commit()																						# necessário para fazer as mudança
+                    print("sucesso?")
+                    self.mensagebox("bem-vindo")
             except:
                 print("formato invalido")
-                self.mensagebox()
+                self.mensagebox("invalido")
                 
 if __name__ == "__main__":
     import sys
