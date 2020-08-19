@@ -1,2 +1,5 @@
-sudo apt-get install libzbar0
-pip install pyzbar,pyqt5,opencv-python,qimage2ndarray,imutils
+pyzbar
+pyqt5
+opencv-python
+qimage2ndarray
+imutils
