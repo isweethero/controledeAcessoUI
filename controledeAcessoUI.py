@@ -20,8 +20,6 @@ from imutils.video import VideoStream
 
 class Ui_MainWindow(object):
     def __init__(self):
-        cadastrodb = mysql.connector.connect(host="192.168.1.145",user="test",passwd="cerejinha123",database="cadastro")		# accesando o banco de dados
-        mycursor = cadastrodb.cursor()
         #self.video_size = QSize(320, 240)
         self.setup_camera()
         
@@ -152,7 +150,7 @@ class Ui_MainWindow(object):
                 comando="select nome from pessoas where rg=md5('{}') and ra=md5('{}')".format(rg,ra)		# e prepará o envio da pergunta 'o rg e o ra estão no banco de dados?' e retorna o nome da pessoa ----- talvez vulnerável a sql injection
 
                 mycursor.execute(comando)																	# executa a ação 
-                
+                    
                 myresult = mycursor.fetchall()		    													# terminado a execução do comando é necessário isso -- https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursor-fetchall.html
 
                 print(myresult)
@@ -170,6 +168,8 @@ class Ui_MainWindow(object):
                 
 if __name__ == "__main__":
     import sys
+    cadastrodb = mysql.connector.connect(host="192.168.1.145",user="test",passwd="cerejinha123",database="cadastro")		# accesando o banco de dados
+    mycursor = cadastrodb.cursor()
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
