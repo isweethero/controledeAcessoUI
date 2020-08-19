@@ -99,7 +99,7 @@ class Ui_MainWindow(object):
         #self.capture.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, self.video_size.height())
 
         self.timer = QTimer()
-        self.timer.timeout.connect(self.display_video_stream)
+        self.timer.timeout.connect(self.principal)
         self.timer.start(30)
 
     def mensagebox(self):
@@ -114,7 +114,7 @@ class Ui_MainWindow(object):
         if returnValue == QMessageBox.Ok:
             print("ok clicado")
 
-    def display_video_stream(self):
+    def principal(self):
         """Read frame from camera and repaint QLabel widget.
         """
         frame = self.capture.read()
