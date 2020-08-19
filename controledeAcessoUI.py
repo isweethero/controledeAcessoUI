@@ -37,7 +37,7 @@ class Ui_MainWindow(object):
         MainWindow.setMaximumSize(QtCore.QSize(1024, 600))
         MainWindow.setWindowTitle("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("qr.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("ico.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setToolButtonStyle(QtCore.Qt.ToolButtonIconOnly)
         MainWindow.setTabShape(QtWidgets.QTabWidget.Rounded)
