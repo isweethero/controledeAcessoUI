@@ -23,9 +23,6 @@ class Ui_MainWindow(object):
         #self.video_size = QSize(320, 240)
         self.setup_camera()
 
-    def cadastroUI(self,CadastroWindow):
-        pass
-
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setWindowModality(QtCore.Qt.NonModal)
@@ -122,7 +119,6 @@ class Ui_MainWindow(object):
             returnValue = msgBox.exec()
             if returnValue == QMessageBox.Yes:
                 print("quer cadastrar")
-                cadastroUI()
 
             if returnValue == QMessageBox.No:
                 print("não quer cadastrar")
