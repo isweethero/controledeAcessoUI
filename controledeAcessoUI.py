@@ -18,6 +18,144 @@ from pyzbar import pyzbar
 import mysql.connector
 from imutils.video import VideoStream
 
+class Ui_RegistroON(object):
+    def setupUi(self, RegistroON):
+        RegistroON.setObjectName("RegistroON")
+        RegistroON.setWindowModality(QtCore.Qt.NonModal)
+        RegistroON.resize(512, 230)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(RegistroON.sizePolicy().hasHeightForWidth())
+        RegistroON.setSizePolicy(sizePolicy)
+        RegistroON.setMinimumSize(QtCore.QSize(512, 230))
+        RegistroON.setMaximumSize(QtCore.QSize(512, 230))
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("ico.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        RegistroON.setWindowIcon(icon)
+        RegistroON.setWindowOpacity(1.0)
+        self.verticalLayoutWidget = QtWidgets.QWidget(RegistroON)
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(0, 10, 511, 41))
+        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
+        self.verticalLayout.setContentsMargins(15, 0, 0, 0)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.label = QtWidgets.QLabel(self.verticalLayoutWidget)
+        font = QtGui.QFont()
+        font.setFamily("Ubuntu")
+        font.setPointSize(12)
+        self.label.setFont(font)
+        self.label.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.label.setObjectName("label")
+        self.verticalLayout.addWidget(self.label)
+        self.verticalLayoutWidget_2 = QtWidgets.QWidget(RegistroON)
+        self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(1, 59, 169, 72))
+        self.verticalLayoutWidget_2.setObjectName("verticalLayoutWidget_2")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_2)
+        self.verticalLayout_2.setContentsMargins(15, 0, 0, 0)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
+        self.horizontalLayout.setContentsMargins(0, -1, -1, -1)
+        self.horizontalLayout.setSpacing(0)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.RgL = QtWidgets.QLabel(self.verticalLayoutWidget_2)
+        self.RgL.setEnabled(True)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.RgL.sizePolicy().hasHeightForWidth())
+        self.RgL.setSizePolicy(sizePolicy)
+        self.RgL.setMinimumSize(QtCore.QSize(25, 30))
+        self.RgL.setMaximumSize(QtCore.QSize(25, 30))
+        font = QtGui.QFont()
+        font.setFamily("Ubuntu")
+        font.setPointSize(12)
+        self.RgL.setFont(font)
+        self.RgL.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.RgL.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.RgL.setTextFormat(QtCore.Qt.AutoText)
+        self.RgL.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.RgL.setObjectName("RgL")
+        self.horizontalLayout.addWidget(self.RgL)
+        self.RgNumeros = QtWidgets.QLabel(self.verticalLayoutWidget_2)
+        self.RgNumeros.setMinimumSize(QtCore.QSize(120, 20))
+        self.RgNumeros.setMaximumSize(QtCore.QSize(120, 20))
+        font = QtGui.QFont()
+        font.setFamily("Ubuntu")
+        font.setPointSize(12)
+        self.RgNumeros.setFont(font)
+        self.RgNumeros.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.RgNumeros.setObjectName("RgNumeros")
+        self.horizontalLayout.addWidget(self.RgNumeros)
+        self.verticalLayout_2.addLayout(self.horizontalLayout)
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_2.setContentsMargins(0, -1, -1, -1)
+        self.horizontalLayout_2.setSpacing(0)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.Ra = QtWidgets.QLabel(self.verticalLayoutWidget_2)
+        self.Ra.setMinimumSize(QtCore.QSize(25, 30))
+        self.Ra.setMaximumSize(QtCore.QSize(25, 30))
+        font = QtGui.QFont()
+        font.setFamily("Ubuntu")
+        font.setPointSize(12)
+        self.Ra.setFont(font)
+        self.Ra.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.Ra.setTextFormat(QtCore.Qt.AutoText)
+        self.Ra.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.Ra.setObjectName("Ra")
+        self.horizontalLayout_2.addWidget(self.Ra)
+        self.RaNumeros = QtWidgets.QLabel(self.verticalLayoutWidget_2)
+        self.RaNumeros.setMinimumSize(QtCore.QSize(120, 20))
+        self.RaNumeros.setMaximumSize(QtCore.QSize(120, 20))
+        font = QtGui.QFont()
+        font.setFamily("Ubuntu")
+        font.setPointSize(12)
+        self.RaNumeros.setFont(font)
+        self.RaNumeros.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.RaNumeros.setObjectName("RaNumeros")
+        self.horizontalLayout_2.addWidget(self.RaNumeros)
+        self.verticalLayout_2.addLayout(self.horizontalLayout_2)
+        self.horizontalLayoutWidget_3 = QtWidgets.QWidget(RegistroON)
+        self.horizontalLayoutWidget_3.setGeometry(QtCore.QRect(0, 160, 511, 61))
+        self.horizontalLayoutWidget_3.setObjectName("horizontalLayoutWidget_3")
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_3)
+        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.confirmarb = QtWidgets.QPushButton(self.horizontalLayoutWidget_3)
+        self.confirmarb.setMinimumSize(QtCore.QSize(100, 50))
+        self.confirmarb.setMaximumSize(QtCore.QSize(100, 50))
+        font = QtGui.QFont()
+        font.setFamily("Ubuntu")
+        font.setPointSize(12)
+        self.confirmarb.setFont(font)
+        self.confirmarb.setObjectName("confirmarb")
+        self.horizontalLayout_3.addWidget(self.confirmarb)
+        self.cancelarb = QtWidgets.QPushButton(self.horizontalLayoutWidget_3)
+        self.cancelarb.setMinimumSize(QtCore.QSize(100, 50))
+        self.cancelarb.setMaximumSize(QtCore.QSize(100, 50))
+        font = QtGui.QFont()
+        font.setFamily("Ubuntu")
+        font.setPointSize(12)
+        self.cancelarb.setFont(font)
+        self.cancelarb.setObjectName("cancelarb")
+        self.horizontalLayout_3.addWidget(self.cancelarb)
+
+        self.retranslateUi(RegistroON)
+        QtCore.QMetaObject.connectSlotsByName(RegistroON)
+
+    def retranslateUi(self, RegistroON):
+        _translate = QtCore.QCoreApplication.translate
+        RegistroON.setWindowTitle(_translate("RegistroON", "Registro"))
+        self.label.setText(_translate("RegistroON", "Confirme os dados abaixo:"))
+        self.RgL.setText(_translate("RegistroON", "RG:"))
+        self.RgNumeros.setText(_translate("RegistroON", "999999999"))
+        self.Ra.setText(_translate("RegistroON", "RA:"))
+        self.RaNumeros.setText(_translate("RegistroON", "1300000000000"))
+        self.confirmarb.setText(_translate("RegistroON", "Confirmar"))
+        self.cancelarb.setText(_translate("RegistroON", "Cancelar"))
+
+
 class Ui_MainWindow(object):
     def __init__(self):
         #self.video_size = QSize(320, 240)
@@ -119,6 +257,7 @@ class Ui_MainWindow(object):
             returnValue = msgBox.exec()
             if returnValue == QMessageBox.Yes:
                 print("quer cadastrar")
+                RegistroON.show()
 
             if returnValue == QMessageBox.No:
                 print("não quer cadastrar")
@@ -152,36 +291,40 @@ class Ui_MainWindow(object):
             separar=barcodeData.split("\r\n")																# separando os dados lidos, é separado no \r\n de cada. exemplo TESTE3\r\n1\r\n1 ficará TESTE3,1,1 ---  rg=9 números ra=13 números
             print("Separando "+str(separar))
 
-            try:
-                nome=separar[0]
-                rg=str(separar[1])																			# rg
-                ra=str(separar[2])																			# ra
-                print("rg="+str(rg))
-                comando="select nome from pessoas where rg=md5('{}') and ra=md5('{}')".format(rg,ra)		# e prepará o envio da pergunta 'o rg e o ra estão no banco de dados?' e retorna o nome da pessoa ----- talvez vulnerável a sql injection
-                mycursor.execute(comando)																	# executa a ação 
-                self.myresult = mycursor.fetchall()		    													# terminado a execução do comando é necessário isso -- https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursor-fetchall.html
+            #try:
+            nome=separar[0]
+            rg=str(separar[1])																			# rg
+            ra=str(separar[2])																			# ra
+            print("rg="+str(rg))
+            comando="select nome from pessoas where rg=md5('{}') and ra=md5('{}')".format(rg,ra)		# e prepará o envio da pergunta 'o rg e o ra estão no banco de dados?' e retorna o nome da pessoa ----- talvez vulnerável a sql injection
+            mycursor.execute(comando)																	# executa a ação 
+            self.myresult = mycursor.fetchall()		    													# terminado a execução do comando é necessário isso -- https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursor-fetchall.html
 
-                if str(self.myresult) == "[]":
-                    print("nao cadastrado, tentando cadastrar")
-                    self.mensagebox("cadastro")
+            if str(self.myresult) == "[]":
+                print("nao cadastrado, tentando cadastrar")
+                self.mensagebox("cadastro")
 
-                else:
-                    print("usuario cadastrado")
-                    print("Bem Vindo {}".format(str(self.myresult).replace("[('","").replace("',)]","")))												# mostra no terminal a mensagem "Bem Vindo" + o nome do usuário formatado corretamente
-                    guardando="insert into controle (ra,datas) values ('{}',current_timestamp())".format(ra)				# guadando a quem entrou na sala no banco de dados
-                    mycursor.execute(guardando)																				# executando a ação
-                    cadastrodb.commit()																						# necessário para fazer as mudança
-                    print("sucesso?")
-                    self.mensagebox("bem-vindo")
-            except:
-                print("formato invalido")
-                self.mensagebox("invalido")
+            else:
+                print("usuario cadastrado")
+                print("Bem Vindo {}".format(str(self.myresult).replace("[('","").replace("',)]","")))												# mostra no terminal a mensagem "Bem Vindo" + o nome do usuário formatado corretamente
+                guardando="insert into controle (ra,datas) values ('{}',current_timestamp())".format(ra)				# guadando a quem entrou na sala no banco de dados
+                mycursor.execute(guardando)																				# executando a ação
+                cadastrodb.commit()																						# necessário para fazer as mudança
+                print("sucesso?")
+                self.mensagebox("bem-vindo")
+            #except:
+            #    print("formato invalido")
+            #    self.mensagebox("invalido")
                 
 if __name__ == "__main__":
     import sys
-    cadastrodb = mysql.connector.connect(host="192.168.1.145",user="test",passwd="cerejinha123",database="cadastro")		# accesando o banco de dados
-    mycursor = cadastrodb.cursor()
+    #cadastrodb = mysql.connector.connect(host="192.168.1.145",user="test",passwd="cerejinha123",database="cadastro")		# accesando o banco de dados
+    #mycursor = cadastrodb.cursor()
     app = QtWidgets.QApplication(sys.argv)
+    app.setStyle('Fusion')
+    RegistroON = QtWidgets.QWidget()
+    ui2 = Ui_RegistroON()
+    ui2.setupUi(RegistroON)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
