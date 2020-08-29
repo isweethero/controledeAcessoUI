@@ -318,8 +318,8 @@ class Ui_MainWindow(object):
                 
 if __name__ == "__main__":
     import sys
-    #cadastrodb = mysql.connector.connect(host="192.168.1.145",user="test",passwd="cerejinha123",database="cadastro")		# accesando o banco de dados
-    #mycursor = cadastrodb.cursor()
+    cadastrodb = mysql.connector.connect(host="192.168.1.145",user="test",passwd="cerejinha123",database="cadastro")		# accesando o banco de dados
+    mycursor = cadastrodb.cursor()
     app = QtWidgets.QApplication(sys.argv)
     app.setStyle('Fusion')
     RegistroON = QtWidgets.QWidget()
