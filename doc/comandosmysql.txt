@@ -38,6 +38,17 @@ desc pessoas;
 alter table pessoas
 add UNIQUE (ra);
 
+create table controle(ra varchar(13), datas datetime)default charset=utf8;
+
+select * from controle;
+
+select date_format(datas, "%d/%l/%Y %H:%i:%s") from controle;
+
+delete from controle where ra=1;
+
+insert into controle(ra,datas) values('1',current_timestamp());
+
+
 --------------------------------------------------------------
 
 https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-18-04
