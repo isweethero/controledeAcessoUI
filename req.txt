@@ -1,5 +1,5 @@
-pyzbar
-pyqt5
-opencv-python
 qimage2ndarray
+pyzbar
+opencv-python
 imutils
+pyqt5
