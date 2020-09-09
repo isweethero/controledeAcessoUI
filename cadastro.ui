@@ -31,6 +31,11 @@
     <height>230</height>
    </size>
   </property>
+  <property name="font">
+   <font>
+    <stylestrategy>PreferAntialias</stylestrategy>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Registro</string>
   </property>
@@ -60,6 +65,10 @@
        <font>
         <family>Ubuntu</family>
         <pointsize>12</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+        <stylestrategy>PreferAntialias</stylestrategy>
+        <kerning>true</kerning>
        </font>
       </property>
       <property name="layoutDirection">
@@ -126,6 +135,7 @@
          <font>
           <family>Ubuntu</family>
           <pointsize>12</pointsize>
+          <stylestrategy>PreferAntialias</stylestrategy>
          </font>
         </property>
         <property name="layoutDirection">
@@ -166,6 +176,7 @@
          <font>
           <family>Ubuntu</family>
           <pointsize>12</pointsize>
+          <stylestrategy>PreferAntialias</stylestrategy>
          </font>
         </property>
         <property name="text">
@@ -204,6 +215,7 @@
          <font>
           <family>Ubuntu</family>
           <pointsize>12</pointsize>
+          <stylestrategy>PreferAntialias</stylestrategy>
          </font>
         </property>
         <property name="layoutDirection">
@@ -241,6 +253,7 @@
          <font>
           <family>Ubuntu</family>
           <pointsize>12</pointsize>
+          <stylestrategy>PreferAntialias</stylestrategy>
          </font>
         </property>
         <property name="text">
@@ -283,6 +296,7 @@
        <font>
         <family>Ubuntu</family>
         <pointsize>12</pointsize>
+        <stylestrategy>PreferAntialias</stylestrategy>
        </font>
       </property>
       <property name="text">
@@ -308,6 +322,7 @@
        <font>
         <family>Ubuntu</family>
         <pointsize>12</pointsize>
+        <stylestrategy>PreferAntialias</stylestrategy>
        </font>
       </property>
       <property name="text">
