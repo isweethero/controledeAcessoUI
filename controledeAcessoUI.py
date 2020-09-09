@@ -238,38 +238,40 @@ class Ui_MainWindow(object):
         self.timer.timeout.connect(self.principal)
         self.timer.start(30)
 
-    def mensagebox(self,op):
+    def mensageboxInvalido(self):
         msgBox = QMessageBox()
         msgBox.setIcon(QMessageBox.Information)
-        if op=="invalido":
-            msgBox.setText("Formato inválido!")
-            msgBox.setWindowTitle("Inválido!")
-            msgBox.setStandardButtons(QMessageBox.Ok)
-            #msgBox.buttonClicked.connect(msgButtonClick)
-            returnValue = msgBox.exec()
-            if returnValue == QMessageBox.Ok:
-                print("ok")
+        msgBox.setText("Formato inválido!")
+        msgBox.setWindowTitle("Inválido!")
+        msgBox.setStandardButtons(QMessageBox.Ok)
+        #msgBox.buttonClicked.connect(msgButtonClick)
+        returnValue = msgBox.exec()
+        if returnValue == QMessageBox.Ok:
+            print("ok")
 
-        if op=="cadastro":
-            msgBox.setText("Usuário não encontrado, deseja iniciar cadastramento?")
-            msgBox.setWindowTitle("Cadastro")
-            msgBox.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-            returnValue = msgBox.exec()
-            if returnValue == QMessageBox.Yes:
-                print("quer cadastrar")
-                RegistroON.show()
+    def mensageboxCadastro(self):
+        msgBox = QMessageBox()
+        msgBox.setIcon(QMessageBox.Information)
+        msgBox.setText("Usuário não encontrado, deseja iniciar cadastramento?")
+        msgBox.setWindowTitle("Cadastro")
+        msgBox.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        returnValue = msgBox.exec()
+        if returnValue == QMessageBox.Yes:
+            print("quer cadastrar")
+            RegistroON.show()
+        if returnValue == QMessageBox.No:
+            print("não quer cadastrar")
+            pass
 
-            if returnValue == QMessageBox.No:
-                print("não quer cadastrar")
-                pass
-
-        if op=="bem-vindo":
-            msgBox.setText("Bem-Vindo {}".format(str(self.myresult).replace("[('","").replace("',)]","")))
-            msgBox.setWindowTitle("Bem-Vindo")
-            msgBox.setStandardButtons(QMessageBox.Ok)
-            returnValue = msgBox.exec()
-            if returnValue == QMessageBox.Ok:
-                print("ok")
+    def mensageboxBemVindo(self):
+        msgBox = QMessageBox()
+        msgBox.setIcon(QMessageBox.Information)
+        msgBox.setText("Bem-Vindo {}".format(str(self.myresult).replace("[('","").replace("',)]","")))
+        msgBox.setWindowTitle("Bem-Vindo")
+        msgBox.setStandardButtons(QMessageBox.Ok)
+        returnValue = msgBox.exec()
+        if returnValue == QMessageBox.Ok:
+            print("ok")
 
     def principal(self):
         frame = self.capture.read()     #Read frame from camera and repaint QLabel widget.
@@ -302,7 +304,7 @@ class Ui_MainWindow(object):
 
             if str(self.myresult) == "[]":
                 print("nao cadastrado, tentando cadastrar")
-                self.mensagebox("cadastro")
+                self.mensageboxCadastro()
 
             else:
                 print("usuario cadastrado")
@@ -311,10 +313,10 @@ class Ui_MainWindow(object):
                 mycursor.execute(guardando)																				# executando a ação
                 cadastrodb.commit()																						# necessário para fazer as mudança
                 print("sucesso?")
-                self.mensagebox("bem-vindo")
+                self.mensageboxBemVindo()
             #except:
             #    print("formato invalido")
-            #    self.mensagebox("invalido")
+            #    self.mensageboxInvalido()
                 
 if __name__ == "__main__":
     import sys
