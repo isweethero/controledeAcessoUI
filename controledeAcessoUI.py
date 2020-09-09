@@ -163,7 +163,7 @@ class Ui_RegistroON(object):
         RegistroON.setWindowTitle(_translate("RegistroON", "Registro"))
         self.label.setText(_translate("RegistroON", "Confirme os dados abaixo:"))
         self.RgL.setText(_translate("RegistroON", "RG:"))
-        self.RgNumeros.setText(_translate("RegistroON", "999999999"))
+        self.RgNumeros.setText(_translate("RegistroON", "999999999"))#"999999999"))
         self.Ra.setText(_translate("RegistroON", "RA:"))
         self.RaNumeros.setText(_translate("RegistroON", "1300000000000"))
         self.confirmarb.setText(_translate("RegistroON", "Confirmar"))
@@ -310,7 +310,7 @@ class Ui_MainWindow(object):
             nome=separar[0]
             rg=str(separar[1])																			# rg
             ra=str(separar[2])																			# ra
-            print("rg="+str(rg))
+            print("rg="+(rg))
             comando="select nome from pessoas where rg=md5('{}') and ra=md5('{}')".format(rg,ra)		# e prepará o envio da pergunta 'o rg e o ra estão no banco de dados?' e retorna o nome da pessoa ----- talvez vulnerável a sql injection
             mycursor.execute(comando)																	# executa a ação 
             self.myresult = mycursor.fetchall()		    													# terminado a execução do comando é necessário isso -- https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursor-fetchall.html
