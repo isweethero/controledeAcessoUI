@@ -3,3 +3,4 @@ pyzbar
 opencv-python
 imutils
 pyqt5
+mysql.connector
