@@ -16,6 +16,8 @@ DROP USER 'test'@'localhost';						---exclui um usuario
 
 Para o acesso remoto da "tabela" sql, foi necessario criar um novo usuario e para conseguir o acesso pela rede a linha "bind-address=127.0.0.1" foi comentada em /etc/mysql/mariadb.conf.d/50-server.cnf
 
+---
+
 Comando usados para a criação das "tabelas" do mysql
 
 create table pessoas(
@@ -25,6 +27,10 @@ rg varchar(9) not null,
 ra varchar(13) not null,
 primary key(id)
 )default charset=utf8;
+
+create table controle(ra varchar(13), datas datetime)default charset=utf8;
+
+---
 
 insert into pessoas
 (nome, rg, ra)
@@ -38,7 +44,7 @@ desc pessoas;
 alter table pessoas
 add UNIQUE (ra);
 
-create table controle(ra varchar(13), datas datetime)default charset=utf8;
+
 
 select * from controle;
 
