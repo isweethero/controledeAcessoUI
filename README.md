@@ -16,7 +16,7 @@ linha 260:
 self.capture=VideoStream(src=0).start()
 mude o valor de src
 
-para a camera do pi:
+para a câmera do pi:
 self.capture=VideoStream(usePiCamera=True).start()
 
 ```
