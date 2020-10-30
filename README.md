@@ -1,9 +1,11 @@
 # controledeAcessoUI - Python3
 
 requisitos:
+```
 python3
 pyzbar
 servidor sql com tabelas de nome "pessoas" e "controle"
+```
 
 instalando dependências:
 ```
