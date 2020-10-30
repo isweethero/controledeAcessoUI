@@ -282,7 +282,6 @@ class Ui_MainWindow(object):
         returnValue = msgBox.exec()
         if returnValue == QMessageBox.Yes:
             RegistroON.show()
-            # if ultimorg!=ultimorg:
 
         if returnValue == QMessageBox.No:
             print("não quer cadastrar")
@@ -299,51 +298,56 @@ class Ui_MainWindow(object):
             print("ok")
 
     def qr(self):
-        # print("estou no qr")
-        frame = self.capture.read()     #Read frame from camera and repaint QLabel widget.
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        #frame = cv2.flip(frame, 1)
-        image = qimage2ndarray.array2qimage(frame)  #SOLUTION FOR MEMORY LEAK
-        self.stream.setPixmap(QtGui.QPixmap(image))
-        barcodes = pyzbar.decode(frame)
-        for barcode in barcodes:			# loop nos códigos reconhecidos
-            (x, y, w, h) = barcode.rect										# pegando as bordas do qr 
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 4)	# e desenhando em volta 
-            barcodeData = barcode.data.decode("utf-8")	# o que foi lido é em bytes, transformando em texto
-            image = qimage2ndarray.array2qimage(frame)  #SOLUTION FOR MEMORY LEAK  
+        if RegistroON.isVisible():
+            print("registro ativo")
+            pass
+        else:
+            # print("estou no qr")
+            frame = self.capture.read()     #Read frame from camera and repaint QLabel widget.
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            #frame = cv2.flip(frame, 1)
+            image = qimage2ndarray.array2qimage(frame)  #SOLUTION FOR MEMORY LEAK
             self.stream.setPixmap(QtGui.QPixmap(image))
-            separar=barcodeData.split("\r\n")
-            # try:
-            global ultimorg
-            global ultimora
-            global ultimonome
-            ultimorg=str(separar[1])
-            ultimora=str(separar[2])
-            ultimonome=str(separar[0])
-            print("aqui temos rg={}, ra={} e nome={}".format(ultimorg,ultimora,ultimonome))
-            comando="select nome from pessoas where rg=md5('{}') and ra=md5('{}')".format(ultimorg,ultimora)		# e prepará o envio da pergunta 'o rg e o ra estão no banco de dados?' e retorna o nome da pessoa ----- talvez vulnerável a sql injection
-            mycursor.execute(comando)																	# executa a ação 
-            self.myresult = mycursor.fetchall()
-            ui2.retranslateUi(RegistroON)
-            print("do for "+ultimorg)
+            barcodes = pyzbar.decode(frame)
+            for barcode in barcodes:			# loop nos códigos reconhecidos
+                (x, y, w, h) = barcode.rect										# pegando as bordas do qr 
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 4)	# e desenhando em volta 
+                barcodeData = barcode.data.decode("utf-8")	# o que foi lido é em bytes, transformando em texto
+                image = qimage2ndarray.array2qimage(frame)  #SOLUTION FOR MEMORY LEAK  
+                self.stream.setPixmap(QtGui.QPixmap(image))
+                separar=barcodeData.split("\r\n")
+                # try:
+                global ultimorg
+                global ultimora
+                global ultimonome
+                ultimorg=str(separar[1])
+                ultimora=str(separar[2])
+                ultimonome=str(separar[0])
+                print("aqui temos rg={}, ra={} e nome={}".format(ultimorg,ultimora,ultimonome))
+                comando="select nome from pessoas where rg=md5('{}') and ra=md5('{}')".format(ultimorg,ultimora)		# e prepará o envio da pergunta 'o rg e o ra estão no banco de dados?' e retorna o nome da pessoa ----- talvez vulnerável a sql injection
+                mycursor.execute(comando)																	# executa a ação 
+                self.myresult = mycursor.fetchall()
+                ui2.retranslateUi(RegistroON)
+                print("do for "+ultimorg)
 
 
-            if str(self.myresult) == "[]":
-                print("nao cadastrado, tentando cadastrar")
-                self.mensageboxCadastro()
+                if str(self.myresult) == "[]":
+                    print("nao cadastrado, tentando cadastrar")
+
+                    self.mensageboxCadastro()
 
 
-            else:
-                print("usuario cadastrado")
-                print("Bem Vindo {}".format(str(self.myresult).replace("[('","").replace("',)]","")))												# mostra no terminal a mensagem "Bem Vindo" + o nome do usuário formatado corretamente
-                guardando="insert into controle (ra,datas) values ('{}',current_timestamp())".format(ultimora)				# guadando a quem entrou na sala no banco de dados
-                mycursor.execute(guardando)																				# executando a ação
-                cadastrodb.commit()																						# necessário para fazer as mudança
-                print("sucesso?")
-                self.mensageboxBemVindo()
-            # except:
-            #     print("formato qr invalido")
-            #     self.mensageboxInvalido()
+                else:
+                    print("usuario cadastrado")
+                    print("Bem Vindo {}".format(str(self.myresult).replace("[('","").replace("',)]","")))												# mostra no terminal a mensagem "Bem Vindo" + o nome do usuário formatado corretamente
+                    guardando="insert into controle (ra,datas) values ('{}',current_timestamp())".format(ultimora)				# guadando a quem entrou na sala no banco de dados
+                    mycursor.execute(guardando)																				# executando a ação
+                    cadastrodb.commit()																						# necessário para fazer as mudança
+                    print("sucesso?")
+                    self.mensageboxBemVindo()
+                # except:
+                #     print("formato qr invalido")
+                #     self.mensageboxInvalido()
 
 
 if __name__ == "__main__":
