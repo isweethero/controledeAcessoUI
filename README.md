@@ -10,7 +10,7 @@ usuário
 senha
 database
 ```
-pode ser necessário mudar a entrada de video:
+pode ser necessário mudar a entrada de vídeo:
 ```
 linha 260:
 self.capture=VideoStream(src=0).start()
