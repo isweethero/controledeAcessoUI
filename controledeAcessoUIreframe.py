@@ -352,7 +352,8 @@ class Ui_MainWindow(object):
 
 if __name__ == "__main__":
     import sys
-    cadastrodb = mysql.connector.connect(host="192.168.1.145",user="test",passwd="cerejinha123",database="cadastro")		# accesando o banco de dados
+    db=open("db", "r").readlines()
+    cadastrodb = mysql.connector.connect(host=db[0].replace("\n",""),user=db[1].replace("\n",""),passwd=db[2].replace("\n",""),database=db[3].replace("\n",""))		# accesando o banco de dados
     mycursor = cadastrodb.cursor()
     ultimora="1300000000000"
     ultimorg="999999999"
