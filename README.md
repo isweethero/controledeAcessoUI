@@ -1,4 +1,11 @@
 # controledeAcessoUI - Python3
+
+requisitos:
+python3
+pyzbar
+servidor sql com tabelas de nome "pessoas" e "controle"
+
+instalando dependências:
 ```
 apt install libzbar0
 pip install -r req.txt
