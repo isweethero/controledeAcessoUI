@@ -152,13 +152,16 @@ class Ui_RegistroON(object):
         QtCore.QMetaObject.connectSlotsByName(RegistroON)
 
     def retranslateUi(self, RegistroON):
+        ultimora="1300000000000"
+        ultimorg="999999999"
         _translate = QtCore.QCoreApplication.translate
         RegistroON.setWindowTitle(_translate("RegistroON", "Registro"))
         self.label.setText(_translate("RegistroON", "Confirme os dados abaixo:"))
         self.RgL.setText(_translate("RegistroON", "RG:"))
-        self.RgNumeros.setText(_translate("RegistroON", "999999999"))
+        self.RgNumeros.setText(_translate("RegistroON", ultimorg))#"999999999"))
         self.Ra.setText(_translate("RegistroON", "RA:"))
-        self.RaNumeros.setText(_translate("RegistroON", "1300000000000"))
+        self.RaNumeros.setText(_translate("RegistroON", ultimora))# 1300000000000
+        print("do retranslate "+ultimorg)
         self.confirmarb.setText(_translate("RegistroON", "Confirmar"))
         self.cancelarb.setText(_translate("RegistroON", "Cancelar"))
 

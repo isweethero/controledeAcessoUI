@@ -18,6 +18,18 @@ import mysql.connector
 from imutils.video import VideoStream
 
 class Ui_RegistroON(object):
+    def cadastrar(self):
+        print("confirmar")																							# mostra no terminal 'confirmar'
+        cadastroc="insert into pessoas (nome, rg, ra) values ('{}', md5('{}'), md5('{}'))".format(ultimonome,ultimorg,ultimora)		# pega os dados de ra e ra lidos anteriormente e insere no banco de dados
+        mycursor.execute(cadastroc)																				# executando a ação 
+        cadastrodb.commit()
+        RegistroON.hide()
+
+    def cancelar(self):
+        print("cancelou")
+        RegistroON.hide()
+        pass
+
     def setupUi(self, RegistroON):
         RegistroON.setObjectName("RegistroON")
         RegistroON.setWindowModality(QtCore.Qt.NonModal)
@@ -157,14 +169,18 @@ class Ui_RegistroON(object):
         self.retranslateUi(RegistroON)
         QtCore.QMetaObject.connectSlotsByName(RegistroON)
 
+        self.confirmarb.clicked.connect(self.cadastrar)
+        self.cancelarb.clicked.connect(self.cancelar)        
+
     def retranslateUi(self, RegistroON):
         _translate = QtCore.QCoreApplication.translate
         RegistroON.setWindowTitle(_translate("RegistroON", "Registro"))
         self.label.setText(_translate("RegistroON", "Confirme os dados abaixo:"))
         self.RgL.setText(_translate("RegistroON", "RG:"))
-        self.RgNumeros.setText(_translate("RegistroON", "999999999"))#"999999999"))
+        self.RgNumeros.setText(_translate("RegistroON", ultimorg))#"999999999"))
         self.Ra.setText(_translate("RegistroON", "RA:"))
-        self.RaNumeros.setText(_translate("RegistroON", "1300000000000"))
+        self.RaNumeros.setText(_translate("RegistroON", ultimora))# 1300000000000
+        print("do retranslate "+ultimorg)
         self.confirmarb.setText(_translate("RegistroON", "Confirmar"))
         self.cancelarb.setText(_translate("RegistroON", "Cancelar"))
 
@@ -241,7 +257,7 @@ class Ui_MainWindow(object):
         self.aguardando.setText(_translate("MainWindow", "Aguardando código QR"))
 
     def setup_camera(self): #Initialize camera.        
-        self.capture=VideoStream(src=2).start()
+        self.capture=VideoStream(src=0).start()     # 2
         self.timer = QTimer()
         self.timer.timeout.connect(self.qr)
         self.timer.start(15)
@@ -252,10 +268,10 @@ class Ui_MainWindow(object):
         msgBox.setText("Formato inválido!")
         msgBox.setWindowTitle("Inválido!")
         msgBox.setStandardButtons(QMessageBox.Ok)
-        #msgBox.buttonClicked.connect(msgButtonClick)
+        # msgBox.buttonClicked.connect(msgButtonClick)
         returnValue = msgBox.exec()
         if returnValue == QMessageBox.Ok:
-            print("ok")
+            print("ok")																					# necessário para fazer as mudanças 
 
     def mensageboxCadastro(self):
         msgBox = QMessageBox()
@@ -265,8 +281,9 @@ class Ui_MainWindow(object):
         msgBox.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         returnValue = msgBox.exec()
         if returnValue == QMessageBox.Yes:
-            print("quer cadastrar")
             RegistroON.show()
+            # if ultimorg!=ultimorg:
+
         if returnValue == QMessageBox.No:
             print("não quer cadastrar")
             pass
@@ -282,6 +299,7 @@ class Ui_MainWindow(object):
             print("ok")
 
     def qr(self):
+        # print("estou no qr")
         frame = self.capture.read()     #Read frame from camera and repaint QLabel widget.
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         #frame = cv2.flip(frame, 1)
@@ -295,6 +313,7 @@ class Ui_MainWindow(object):
             image = qimage2ndarray.array2qimage(frame)  #SOLUTION FOR MEMORY LEAK  
             self.stream.setPixmap(QtGui.QPixmap(image))
             separar=barcodeData.split("\r\n")
+            # try:
             global ultimorg
             global ultimora
             global ultimonome
@@ -302,13 +321,37 @@ class Ui_MainWindow(object):
             ultimora=str(separar[2])
             ultimonome=str(separar[0])
             print("aqui temos rg={}, ra={} e nome={}".format(ultimorg,ultimora,ultimonome))
+            comando="select nome from pessoas where rg=md5('{}') and ra=md5('{}')".format(ultimorg,ultimora)		# e prepará o envio da pergunta 'o rg e o ra estão no banco de dados?' e retorna o nome da pessoa ----- talvez vulnerável a sql injection
+            mycursor.execute(comando)																	# executa a ação 
+            self.myresult = mycursor.fetchall()
+            ui2.retranslateUi(RegistroON)
+            print("do for "+ultimorg)
 
+
+            if str(self.myresult) == "[]":
+                print("nao cadastrado, tentando cadastrar")
+                self.mensageboxCadastro()
+
+
+            else:
+                print("usuario cadastrado")
+                print("Bem Vindo {}".format(str(self.myresult).replace("[('","").replace("',)]","")))												# mostra no terminal a mensagem "Bem Vindo" + o nome do usuário formatado corretamente
+                guardando="insert into controle (ra,datas) values ('{}',current_timestamp())".format(ultimora)				# guadando a quem entrou na sala no banco de dados
+                mycursor.execute(guardando)																				# executando a ação
+                cadastrodb.commit()																						# necessário para fazer as mudança
+                print("sucesso?")
+                self.mensageboxBemVindo()
+            # except:
+            #     print("formato qr invalido")
+            #     self.mensageboxInvalido()
 
 
 if __name__ == "__main__":
     import sys
-    # cadastrodb = mysql.connector.connect(host="192.168.1.145",user="test",passwd="cerejinha123",database="cadastro")		# accesando o banco de dados
-    # mycursor = cadastrodb.cursor()
+    cadastrodb = mysql.connector.connect(host="192.168.1.145",user="test",passwd="cerejinha123",database="cadastro")		# accesando o banco de dados
+    mycursor = cadastrodb.cursor()
+    ultimora="1300000000000"
+    ultimorg="999999999"
     app = QtWidgets.QApplication(sys.argv)
     app.setStyle('Fusion')
     RegistroON = QtWidgets.QWidget()
