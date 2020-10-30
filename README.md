@@ -17,7 +17,7 @@ crie um arquivo no direitorio com o nome de "db" contendo:
 ip
 usuário
 senha
-database
+nome da database
 ```
 pode ser necessário mudar a entrada de vídeo:
 ```
