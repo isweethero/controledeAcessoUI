@@ -48,6 +48,7 @@ class Ui_RegistroON(object):
         icon.addPixmap(QtGui.QPixmap("ico.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         RegistroON.setWindowIcon(icon)
         RegistroON.setWindowOpacity(1.0)
+        RegistroON.setStyleSheet("background-color: rgb(61, 61, 61);")
         self.verticalLayoutWidget = QtWidgets.QWidget(RegistroON)
         self.verticalLayoutWidget.setGeometry(QtCore.QRect(0, 10, 511, 41))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
@@ -65,6 +66,7 @@ class Ui_RegistroON(object):
         self.label.setFont(font)
         self.label.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.label.setObjectName("label")
+        self.label.setStyleSheet("color: rgb(255, 255, 255);")
         self.verticalLayout.addWidget(self.label)
         self.verticalLayoutWidget_2 = QtWidgets.QWidget(RegistroON)
         self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(0, 50, 169, 72))
@@ -98,6 +100,7 @@ class Ui_RegistroON(object):
         self.RgL.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.RgL.setObjectName("RgL")
         self.horizontalLayout.addWidget(self.RgL)
+        self.RgL.setStyleSheet("color: rgb(255, 255, 255);")
         self.RgNumeros = QtWidgets.QLabel(self.verticalLayoutWidget_2)
         self.RgNumeros.setMinimumSize(QtCore.QSize(120, 20))
         self.RgNumeros.setMaximumSize(QtCore.QSize(120, 20))
@@ -108,6 +111,7 @@ class Ui_RegistroON(object):
         self.RgNumeros.setFont(font)
         self.RgNumeros.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.RgNumeros.setObjectName("RgNumeros")
+        self.RgNumeros.setStyleSheet("color: rgb(255, 255, 255);")
         self.horizontalLayout.addWidget(self.RgNumeros)
         self.verticalLayout_2.addLayout(self.horizontalLayout)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
@@ -126,6 +130,7 @@ class Ui_RegistroON(object):
         self.Ra.setTextFormat(QtCore.Qt.AutoText)
         self.Ra.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Ra.setObjectName("Ra")
+        self.Ra.setStyleSheet("color: rgb(255, 255, 255);")
         self.horizontalLayout_2.addWidget(self.Ra)
         self.RaNumeros = QtWidgets.QLabel(self.verticalLayoutWidget_2)
         self.RaNumeros.setMinimumSize(QtCore.QSize(120, 20))
@@ -137,6 +142,7 @@ class Ui_RegistroON(object):
         self.RaNumeros.setFont(font)
         self.RaNumeros.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.RaNumeros.setObjectName("RaNumeros")
+        self.RaNumeros.setStyleSheet("color: rgb(255, 255, 255);")
         self.horizontalLayout_2.addWidget(self.RaNumeros)
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)
         self.horizontalLayoutWidget_3 = QtWidgets.QWidget(RegistroON)
@@ -154,6 +160,7 @@ class Ui_RegistroON(object):
         font.setStyleStrategy(QtGui.QFont.PreferAntialias)
         self.confirmarb.setFont(font)
         self.confirmarb.setObjectName("confirmarb")
+        self.confirmarb.setStyleSheet("color: rgb(255, 255, 255);")
         self.horizontalLayout_3.addWidget(self.confirmarb)
         self.cancelarb = QtWidgets.QPushButton(self.horizontalLayoutWidget_3)
         self.cancelarb.setMinimumSize(QtCore.QSize(100, 35))
@@ -164,6 +171,7 @@ class Ui_RegistroON(object):
         font.setStyleStrategy(QtGui.QFont.PreferAntialias)
         self.cancelarb.setFont(font)
         self.cancelarb.setObjectName("cancelarb")
+        self.cancelarb.setStyleSheet("color: rgb(255, 255, 255);")
         self.horizontalLayout_3.addWidget(self.cancelarb)
 
         self.retranslateUi(RegistroON)
@@ -274,7 +282,7 @@ class Ui_MainWindow(object):
         # msgBox.buttonClicked.connect(msgButtonClick)
         returnValue = msgBox.exec()
         if returnValue == QMessageBox.Ok:
-            print("ok")																					# necessário para fazer as mudanças 
+            print("inv ok")																					# necessário para fazer as mudanças 
 
     def mensageboxCadastro(self):
         msgBox = QMessageBox()
@@ -298,7 +306,7 @@ class Ui_MainWindow(object):
         msgBox.setStandardButtons(QMessageBox.Ok)
         returnValue = msgBox.exec()
         if returnValue == QMessageBox.Ok:
-            print("ok")
+            print("bem vindo ok")
 
     def qr(self):
         if RegistroON.isVisible():
@@ -319,38 +327,39 @@ class Ui_MainWindow(object):
                 image = qimage2ndarray.array2qimage(frame)  #SOLUTION FOR MEMORY LEAK  
                 self.stream.setPixmap(QtGui.QPixmap(image))
                 separar=barcodeData.split("\r\n")
-                # try:
-                global ultimorg
-                global ultimora
-                global ultimonome
-                ultimorg=str(separar[1])
-                ultimora=str(separar[2])
-                ultimonome=str(separar[0])
-                print("aqui temos rg={}, ra={} e nome={}".format(ultimorg,ultimora,ultimonome))
-                comando="select nome from pessoas where rg=md5('{}') and ra=md5('{}')".format(ultimorg,ultimora)		# e prepará o envio da pergunta 'o rg e o ra estão no banco de dados?' e retorna o nome da pessoa ----- talvez vulnerável a sql injection
-                mycursor.execute(comando)																	# executa a ação 
-                self.myresult = mycursor.fetchall()
-                ui2.retranslateUi(RegistroON)
-                print("do for "+ultimorg)
+
+                try:
+                    global ultimorg
+                    global ultimora
+                    global ultimonome
+                    ultimorg=str(separar[1])
+                    ultimora=str(separar[2])
+                    ultimonome=str(separar[0])
+                    print("aqui temos rg={}, ra={} e nome={}".format(ultimorg,ultimora,ultimonome))
+                    comando="select nome from pessoas where rg=md5('{}') and ra=md5('{}')".format(ultimorg,ultimora)		# e prepará o envio da pergunta 'o rg e o ra estão no banco de dados?' e retorna o nome da pessoa ----- talvez vulnerável a sql injection
+                    mycursor.execute(comando)																	# executa a ação 
+                    self.myresult = mycursor.fetchall()
+                    ui2.retranslateUi(RegistroON)
+                    print("do for "+ultimorg)
 
 
-                if str(self.myresult) == "[]":
-                    print("nao cadastrado, tentando cadastrar")
+                    if str(self.myresult) == "[]":
+                        print("nao cadastrado, tentando cadastrar")
 
-                    self.mensageboxCadastro()
+                        self.mensageboxCadastro()
 
 
-                else:
-                    print("usuario cadastrado")
-                    print("Bem Vindo {}".format(str(self.myresult).replace("[('","").replace("',)]","")))												# mostra no terminal a mensagem "Bem Vindo" + o nome do usuário formatado corretamente
-                    guardando="insert into controle (ra,datas) values ('{}',current_timestamp())".format(ultimora)				# guadando a quem entrou na sala no banco de dados
-                    mycursor.execute(guardando)																				# executando a ação
-                    cadastrodb.commit()																						# necessário para fazer as mudança
-                    print("sucesso?")
-                    self.mensageboxBemVindo()
-                # except:
-                #     print("formato qr invalido")
-                #     self.mensageboxInvalido()
+                    else:
+                        print("usuario cadastrado")
+                        print("Bem Vindo {}".format(str(self.myresult).replace("[('","").replace("',)]","")))												# mostra no terminal a mensagem "Bem Vindo" + o nome do usuário formatado corretamente
+                        guardando="insert into controle (ra,datas) values ('{}',current_timestamp())".format(ultimora)				# guadando a quem entrou na sala no banco de dados
+                        mycursor.execute(guardando)																				# executando a ação
+                        cadastrodb.commit()																						# necessário para fazer as mudança
+                        print("sucesso?")
+                        self.mensageboxBemVindo()
+                except:
+                    print("formato qr invalido")
+                    self.mensageboxInvalido()
 
 
 if __name__ == "__main__":
