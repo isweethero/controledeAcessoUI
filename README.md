@@ -18,8 +18,8 @@ ip
 usuário
 senha
 nome da database
-nome da tabela para ser usada como controle de usuarios
-nome da tabela para ser armazenada as entradas dos usuarios
+nome da tabela para ser usada como controle de usuários
+nome da tabela para ser armazenada as entradas dos usuários
 ```
 pode ser necessário mudar a entrada de vídeo:
 ```
