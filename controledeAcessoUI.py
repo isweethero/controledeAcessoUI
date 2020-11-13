@@ -20,7 +20,7 @@ from imutils.video import VideoStream
 class Ui_RegistroON(object):
     def cadastrar(self):
         print("confirmar")																							# mostra no terminal 'confirmar'
-        cadastroc="insert into pessoas (nome, rg, ra) values ('{}', md5('{}'), md5('{}'))".format(ultimonome,ultimorg,ultimora)		# pega os dados de ra e ra lidos anteriormente e insere no banco de dados
+        cadastroc="insert into {} (nome, rg, ra) values ('{}', md5('{}'), md5('{}'))".format(tabelaUsuarios,ultimonome,ultimorg,ultimora)		# pega os dados de ra e ra lidos anteriormente e insere no banco de dados
         mycursor.execute(cadastroc)																				# executando a ação 
         cadastrodb.commit()
         RegistroON.hide()
@@ -336,7 +336,7 @@ class Ui_MainWindow(object):
                     ultimora=str(separar[2])
                     ultimonome=str(separar[0])
                     print("aqui temos rg={}, ra={} e nome={}".format(ultimorg,ultimora,ultimonome))
-                    comando="select nome from pessoas where rg=md5('{}') and ra=md5('{}')".format(ultimorg,ultimora)		# e prepará o envio da pergunta 'o rg e o ra estão no banco de dados?' e retorna o nome da pessoa ----- talvez vulnerável a sql injection
+                    comando="select nome from {} where rg=md5('{}') and ra=md5('{}')".format(tabelaUsuarios,ultimorg,ultimora)		# e prepará o envio da pergunta 'o rg e o ra estão no banco de dados?' e retorna o nome da pessoa ----- talvez vulnerável a sql injection
                     mycursor.execute(comando)																	# executa a ação 
                     self.myresult = mycursor.fetchall()
                     ui2.retranslateUi(RegistroON)
@@ -352,7 +352,7 @@ class Ui_MainWindow(object):
                     else:
                         print("usuario cadastrado")
                         print("Bem Vindo {}".format(str(self.myresult).replace("[('","").replace("',)]","")))												# mostra no terminal a mensagem "Bem Vindo" + o nome do usuário formatado corretamente
-                        guardando="insert into controle (ra,datas) values ('{}',current_timestamp())".format(ultimora)				# guadando a quem entrou na sala no banco de dados
+                        guardando="insert into {} (ra,datas) values ('{}',current_timestamp())".format(tabelaControle,ultimora)				# guadando a quem entrou na sala no banco de dados
                         mycursor.execute(guardando)																				# executando a ação
                         cadastrodb.commit()																						# necessário para fazer as mudança
                         print("sucesso?")
@@ -364,9 +364,11 @@ class Ui_MainWindow(object):
 
 if __name__ == "__main__":
     import sys
-    db=open("db", "r").readlines()
-    cadastrodb = mysql.connector.connect(host=db[0].replace("\n",""),user=db[1].replace("\n",""),passwd=db[2].replace("\n",""),database=db[3].replace("\n",""))		# accesando o banco de dados
+    config=open("config", "r").readlines()
+    cadastrodb = mysql.connector.connect(host=config[0].replace("\n",""),user=config[1].replace("\n",""),passwd=config[2].replace("\n",""),database=config[3].replace("\n",""))		# accesando o banco de dados
     mycursor = cadastrodb.cursor()
+    tabelaUsuarios=config[4].replace("\n","")
+    tabelaControle=config[5].replace("\n","")
     ultimora="1300000000000"
     ultimorg="999999999"
     app = QtWidgets.QApplication(sys.argv)
