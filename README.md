@@ -4,7 +4,7 @@ requisitos:
 ```
 python3
 pyzbar
-servidor sql com tabelas de nome "pessoas" e "controle"
+servidor mysql
 ```
 
 instalando dependências:
@@ -18,6 +18,8 @@ ip
 usuário
 senha
 nome da database
+nome da tabela para ser usada como controle de usuarios
+nome da tabela para ser armazenada as entradas dos usuarios
 ```
 pode ser necessário mudar a entrada de vídeo:
 ```
