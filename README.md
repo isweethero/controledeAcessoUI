@@ -12,7 +12,7 @@ instalando dependências:
 apt install libzbar0
 pip install -r req.txt
 ```
-crie um arquivo no direitorio com o nome de "db" contendo:
+crie um arquivo no direitorio com o nome de "config" contendo:
 ```
 ip
 usuário
