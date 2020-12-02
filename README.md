@@ -1,6 +1,6 @@
 # controledeAcessoUI - Laboratório Maker - Python3
 
-Projeto do 4° Semestre de Manufatura Avançada, propondo um sistema de controle de aceeso para um laboratório.
+Projeto do 4° Semestre de Manufatura Avançada, propondo um sistema de controle de acesso para um laboratório.
 
 requisitos:
 ```
