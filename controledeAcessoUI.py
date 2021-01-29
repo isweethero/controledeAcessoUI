@@ -188,7 +188,7 @@ class Ui_RegistroON(object):
         self.RgNumeros.setText(_translate("RegistroON", ultimorg))#"999999999"))
         self.Ra.setText(_translate("RegistroON", "RA:"))
         self.RaNumeros.setText(_translate("RegistroON", ultimora))# 1300000000000
-        print("do retranslate "+ultimorg)
+        #print("do retranslate "+ultimorg)
         self.confirmarb.setText(_translate("RegistroON", "Confirmar"))
         self.cancelarb.setText(_translate("RegistroON", "Cancelar"))
 
@@ -335,12 +335,12 @@ class Ui_MainWindow(object):
                     ultimorg=str(separar[1])
                     ultimora=str(separar[2])
                     ultimonome=str(separar[0])
-                    print("aqui temos rg={}, ra={} e nome={}".format(ultimorg,ultimora,ultimonome))
+                    #print("aqui temos rg={}, ra={} e nome={}".format(ultimorg,ultimora,ultimonome))
                     comando="select nome from {} where rg=md5('{}') and ra=md5('{}')".format(tabelaUsuarios,ultimorg,ultimora)		# e prepará o envio da pergunta 'o rg e o ra estão no banco de dados?' e retorna o nome da pessoa ----- talvez vulnerável a sql injection
                     mycursor.execute(comando)																	# executa a ação 
                     self.myresult = mycursor.fetchall()
                     ui2.retranslateUi(RegistroON)
-                    print("do for "+ultimorg)
+                    #print("do for "+ultimorg)
 
 
                     if str(self.myresult) == "[]":
