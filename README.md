@@ -5,8 +5,8 @@ Projeto do 4° Semestre de Manufatura Avançada propondo um sistema de controle 
 requisitos:
 ```
 python3
-pyzbar
-servidor mysql
+zbar
+servidor sql
 ```
 
 instalando dependências:
