@@ -23,6 +23,10 @@ nome da database
 nome da tabela para ser usada como controle de usuários
 nome da tabela para ser armazenada as entradas dos usuários
 ```
+Rodando:
+```
+python3 controledeAcessoUI.py
+```
 pode ser necessário mudar a entrada de vídeo:
 ```
 linha 260:
