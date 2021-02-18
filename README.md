@@ -1,6 +1,6 @@
 # controledeAcessoUI - Laboratório Maker - Python3
 
-Projeto do 4° Semestre de Manufatura Avançada propondo um sistema de controle de acesso para um laboratório baseando-se na leitura de códigos qr presentes na carteirinha de estudanten, utilizando pyzbar e pyqt5 juntamente com um servidor sql.
+Projeto do 4° Semestre de Manufatura Avançada propondo um sistema de controle de acesso para um laboratório baseando-se na leitura de códigos qr presentes na carteirinha de estudante, utilizando pyzbar e pyqt5 juntamente com um servidor sql.
 
 requisitos:
 ```
