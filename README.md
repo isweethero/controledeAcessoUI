@@ -16,7 +16,7 @@ pip install -r req.txt
 ```
 crie um arquivo no direitorio com o nome de "config" contendo:
 ```
-ip - se o servidor sql estiver na mesmo computador que script python use "127.0.0.1"
+ip - se o servidor sql estiver no mesmo computador que script use "127.0.0.1"
 usuário
 senha
 nome da database
